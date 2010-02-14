@@ -65,6 +65,19 @@
    {:name "Pomegranate" :appearance "fresh" :cost 585}
    {:name "Kiwifruit" :grade 93}))
 
+(defn delete-rows-fruit
+  "Delete some rows"
+  []
+  (sql/delete-rows
+   :fruit
+   ["name = ?" "Banana"]))
+
+(defn delete-table-fruit
+  "Delete all rows"
+  []
+  (sql/delete-rows
+   :fruit))
+
 (defn db-write
   "Write initial values to the database as a transaction"
   []
@@ -74,8 +87,10 @@
      (create-fruit)
      (insert-rows-fruit)
      (insert-values-fruit)
-     (insert-records-fruit)))
-  nil)
+     (insert-records-fruit)
+     (delete-rows-fruit)
+     (delete-table-fruit)
+  nil)))
 
 (defn db-read
   "Read the entire fruit table"

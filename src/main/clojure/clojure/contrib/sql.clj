@@ -160,11 +160,14 @@
   "Deletes rows from a table. where-params is a vector containing a string
   providing the (optionally parameterized) selection criteria followed by
   values for any parameters."
-  [table where-params]
-  (let [[where & params] where-params]
+  [table & where-params]
+  (let [[where & params] (first where-params)]
     (do-prepared
-     (format "DELETE FROM %s WHERE %s"
-             (as-str table) where)
+     (str (format "DELETE FROM %s"
+	          (as-str table))
+	  (if where
+	    (format " WHERE %s"
+                    where)))
      params)))
 
 (defn update-values
